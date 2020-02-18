@@ -181,6 +181,25 @@ public class PinLockView extends RecyclerView {
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
+    public void setPin(String mPin) {
+        this.mPin = mPin;
+
+        if (isIndicatorDotsAttached()) {
+            mIndicatorDots.updateDot(mPin.length());
+        }
+
+        mAdapter.setPinLength(1);
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+
+        if (mPinLockListener != null) {
+            if (mPin.length() == mPinLength) {
+                mPinLockListener.onComplete(mPin);
+            } else {
+                mPinLockListener.onPinChange(mPin.length(), mPin);
+            }
+        }
+    }
+
     /**
      * Sets a {@link PinLockListener} to the to listen to pin update events
      *
