@@ -195,6 +195,8 @@ public class PinLockView extends RecyclerView {
     }
 
     public void setPin(String mPin) {
+        resetPinLockView();
+
         this.mPin = mPin;
 
         if (isIndicatorDotsAttached()) {
