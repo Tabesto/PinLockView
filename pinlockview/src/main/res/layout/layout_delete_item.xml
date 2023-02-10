@@ -17,5 +17,5 @@
             android:clickable="false"
             android:focusable="false"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_delete" />
+            android:src="@drawable/pinlockview_ic_delete" />
 </LinearLayout>

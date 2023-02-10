@@ -57,9 +57,9 @@ public class IndicatorDots extends LinearLayout {
             mDotDiameter = (int) typedArray.getDimension(R.styleable.PinLockView_dotDiameter, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_dot_diameter));
             mDotSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_dotSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_dot_spacing));
             mFillDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
-                    R.drawable.dot_filled);
+                    R.drawable.pinlockview_dot_filled);
             mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground,
-                    R.drawable.dot_empty);
+                    R.drawable.pinlockview_dot_empty);
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
             mIndicatorType = typedArray.getInt(R.styleable.PinLockView_indicatorType,
                     IndicatorType.FIXED);

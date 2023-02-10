@@ -48,7 +48,6 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder = new DeleteViewHolder(view);
                 break;
             }
-            //todo
             case VIEW_TYPE_DELETE_ALL: {
                 View view = inflater.inflate(R.layout.layout_delete_all_item, parent, false);
                 viewHolder = new DeleteAllViewHolder(view);
@@ -71,7 +70,6 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 configureDeleteButtonHolder(vh2);
                 break;
             }
-            //todo
             case VIEW_TYPE_DELETE_ALL: {
                 DeleteAllViewHolder vh2 = (DeleteAllViewHolder) holder;
                 configureDeleteAllButtonHolder(vh2);
