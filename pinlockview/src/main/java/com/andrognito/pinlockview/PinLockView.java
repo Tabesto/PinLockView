@@ -27,6 +27,7 @@ public class PinLockView extends RecyclerView {
     private int mTextSize, mButtonSize, mDeleteButtonSize;
     private Drawable mButtonBackgroundDrawable;
     private Drawable mDeleteButtonDrawable;
+    private Drawable mDeleteAllButtonDrawable;
     private boolean mShowDeleteButton;
 
     private IndicatorDots mIndicatorDots;
@@ -49,6 +50,7 @@ public class PinLockView extends RecyclerView {
                 if (mPin.length() == 1) {
                     mAdapter.setPinLength(mPin.length());
                     mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 3);
                 }
 
                 if (mPinLockListener != null) {
@@ -94,6 +96,7 @@ public class PinLockView extends RecyclerView {
                 if (mPin.length() == 0) {
                     mAdapter.setPinLength(mPin.length());
                     mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 3);
                 }
 
                 if (mPinLockListener != null) {
@@ -113,6 +116,14 @@ public class PinLockView extends RecyclerView {
 
         @Override
         public void onDeleteLongClicked() {
+            resetPinLockView();
+            if (mPinLockListener != null) {
+                mPinLockListener.onEmpty();
+            }
+        }
+
+        @Override
+        public void onDeleteAllClicked() {
             resetPinLockView();
             if (mPinLockListener != null) {
                 mPinLockListener.onEmpty();
@@ -149,6 +160,7 @@ public class PinLockView extends RecyclerView {
             mDeleteButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadDeleteButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_delete_button_size));
             mButtonBackgroundDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadButtonBackgroundDrawable);
             mDeleteButtonDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadDeleteButtonDrawable);
+            mDeleteAllButtonDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadDeleteAllButtonDrawable);
             mShowDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowDeleteButton, true);
             mDeleteButtonPressedColor = typedArray.getColor(R.styleable.PinLockView_keypadDeleteButtonPressedColor, ResourceUtils.getColor(getContext(), R.color.greyish));
         } finally {
@@ -161,6 +173,7 @@ public class PinLockView extends RecyclerView {
         mCustomizationOptionsBundle.setButtonSize(mButtonSize);
         mCustomizationOptionsBundle.setButtonBackgroundDrawable(mButtonBackgroundDrawable);
         mCustomizationOptionsBundle.setDeleteButtonDrawable(mDeleteButtonDrawable);
+        mCustomizationOptionsBundle.setDeleteAllButtonDrawable(mDeleteAllButtonDrawable);
         mCustomizationOptionsBundle.setDeleteButtonSize(mDeleteButtonSize);
         mCustomizationOptionsBundle.setShowDeleteButton(mShowDeleteButton);
         mCustomizationOptionsBundle.setDeleteButtonPressesColor(mDeleteButtonPressedColor);
@@ -182,6 +195,8 @@ public class PinLockView extends RecyclerView {
     }
 
     public void setPin(String mPin) {
+        resetPinLockView();
+
         this.mPin = mPin;
 
         if (isIndicatorDotsAttached()) {
@@ -332,6 +347,26 @@ public class PinLockView extends RecyclerView {
     }
 
     /**
+     * Get the drawable of the delete all button
+     *
+     * @return the delete button drawable
+     */
+    public Drawable getDeleteAllButtonDrawable() {
+        return mDeleteAllButtonDrawable;
+    }
+
+    /**
+     * Set the drawable of the delete button all dynamically
+     *
+     * @param deleteAllBackgroundDrawable the delete button drawable
+     */
+    public void setDeleteAllButtonDrawable(Drawable deleteAllBackgroundDrawable) {
+        this.mDeleteAllButtonDrawable = deleteAllBackgroundDrawable;
+        mCustomizationOptionsBundle.setDeleteAllButtonDrawable(deleteAllBackgroundDrawable);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * Get the delete button size in pixels
      *
      * @return size in pixels
@@ -425,6 +460,7 @@ public class PinLockView extends RecyclerView {
 
         mAdapter.setPinLength(mPin.length());
         mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 3);
 
         if (mIndicatorDots != null) {
             mIndicatorDots.updateDot(mPin.length());
